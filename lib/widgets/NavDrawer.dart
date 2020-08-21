@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pan_asia_bank_app/screens/RegisteredBillPayment.dart';
 
 class NavDrawer extends StatelessWidget {
   @override
@@ -31,7 +32,11 @@ class NavDrawer extends StatelessWidget {
               color: Color(0xFFFFFFFF)
             ),
             ),
-            onTap: () => {},
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+              context, MaterialPageRoute(builder: (context) => RegisteredBillPayment()));
+            },
 
           ),
           ListTile(
