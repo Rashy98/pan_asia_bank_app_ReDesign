@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:pan_asia_bank_app/screens/Login.dart';
+import 'package:pan_asia_bank_app/screens/ManageAccount.dart';
+import 'package:pan_asia_bank_app/screens/MyProfile.dart';
 import 'package:pan_asia_bank_app/screens/RegisteredBillPayment.dart';
+import 'package:pan_asia_bank_app/screens/AccountSummary.dart';
+
 
 class NavDrawer extends StatelessWidget {
   @override
@@ -35,7 +40,7 @@ class NavDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               Navigator.push(
-              context, MaterialPageRoute(builder: (context) => RegisteredBillPayment()));
+              context, MaterialPageRoute(builder: (context) => AccountSummary()));
             },
 
           ),
@@ -44,14 +49,34 @@ class NavDrawer extends StatelessWidget {
             title: Text('Profile',style: const TextStyle(
                 color: Color(0xFFFFFFFF)
             ),),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () => {
+              Navigator.of(context).pop(),
+              Navigator.push(
+              context, MaterialPageRoute(builder: (context) => MyProfile()))
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.account_circle),
+            title: Text('Account',style: const TextStyle(
+                color: Color(0xFFFFFFFF)
+            ),),
+            onTap: () => {
+              Navigator.of(context).pop(),
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => ManageAccount()))
+            },
           ),
           ListTile(
             leading: Icon(Icons.settings),
             title: Text('Settings',style: const TextStyle(
                 color: Color(0xFFFFFFFF)
             ),),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () => {
+              Navigator.of(context).pop(),
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => RegisteredBillPayment())
+              )},
+
           ),
           ListTile(
             leading: Icon(Icons.border_color),
@@ -65,7 +90,12 @@ class NavDrawer extends StatelessWidget {
             title: Text('Logout',style: const TextStyle(
                 color: Color(0xFFFFFFFF)
             ),),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () => {
+              Navigator.of(context).pop(),
+              Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Login())
+              )
+            },
           ),
         ],
       )
