@@ -22,9 +22,12 @@ environment:
 
 dependencies:
   fancy_dialog: ^1.0.1
+  flutter_rounded_date_picker: 1.0.0
+  flutter_cupertino_date_picker: ^1.0.26+2
   flutter:
     sdk: flutter
   flutter_widget_from_html:
+
 
 
   # The following adds the Cupertino Icons font to your application.

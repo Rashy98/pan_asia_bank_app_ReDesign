@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+//import 'package:pan_asia_bank_app/screens/AdHocBillPaymentForm.dart';
 import 'package:pan_asia_bank_app/screens/Login.dart';
 import 'package:pan_asia_bank_app/screens/ManageAccount.dart';
 import 'package:pan_asia_bank_app/screens/MyProfile.dart';
@@ -30,10 +31,36 @@ class NavDrawer extends StatelessWidget {
 //                    fit: BoxFit.fill,
 //                    )),
           ),
+          ListTile(
+            leading: Icon(Icons.dashboard),
+            title: Text('Dashboard' , style: const TextStyle(
+                color: Color(0xFFFFFFFF)
+            ),
+            ),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => RegisteredBill()));
+            },
+          ),
 
           ListTile(
             leading: Icon(Icons.input),
-            title: Text('Welcome' , style: const TextStyle(
+            title: Text('My Accounts' , style: const TextStyle(
+                color: Color(0xFFFFFFFF)
+            ),
+            ),
+            trailing: Icon(Icons.keyboard_arrow_right),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => AccountSummary()));
+            },
+          ),
+
+            ListTile(
+            leading: Icon(Icons.input),
+            title: Text('Fund Transfer' , style: const TextStyle(
               color: Color(0xFFFFFFFF)
             ),
             ),
@@ -45,8 +72,28 @@ class NavDrawer extends StatelessWidget {
 
           ),
           ListTile(
+            leading: Icon(Icons.receipt),
+            title: Text('Pay Bills' , style: const TextStyle(
+                color: Color(0xFFFFFFFF)
+            ),
+            ),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => RegisteredBill()));
+            },
+
+          ),
+          ListTile(
             leading: Icon(Icons.verified_user),
-            title: Text('Profile',style: const TextStyle(
+            title: Text('Standing orders',style: const TextStyle(
+                color: Color(0xFFFFFFFF)
+            ),),
+            onTap: () => {Navigator.of(context).pop()},
+          ),
+          ListTile(
+            leading: Icon(Icons.payment),
+            title: Text('Card Services',style: const TextStyle(
                 color: Color(0xFFFFFFFF)
             ),),
             onTap: () => {
@@ -68,19 +115,26 @@ class NavDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.settings),
-            title: Text('Settings',style: const TextStyle(
+            title: Text('Preferences',style: const TextStyle(
+                color: Color(0xFFFFFFFF)
+            ),),
+            onTap: () => {Navigator.of(context).pop()},
+          ),
+          ListTile(
+            leading: Icon(Icons.location_on),
+            title: Text('ATM and Branch Locator',style: const TextStyle(
                 color: Color(0xFFFFFFFF)
             ),),
             onTap: () => {
               Navigator.of(context).pop(),
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => RegisteredBillPayment())
+                  context, MaterialPageRoute(builder: (context) => RegisteredBill())
               )},
 
           ),
           ListTile(
-            leading: Icon(Icons.border_color),
-            title: Text('Feedback',style: const TextStyle(
+            leading: Icon(Icons.local_phone),
+            title: Text('Contact Us',style: const TextStyle(
                 color: Color(0xFFFFFFFF)
             ),),
             onTap: () => {Navigator.of(context).pop()},

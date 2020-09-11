@@ -2,14 +2,40 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pan_asia_bank_app/widgets/NavDrawer.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:intl/intl.dart';
 
 
-class RegisteredBillPayment extends StatelessWidget {
 
+class RegisteredBill extends StatefulWidget {
+  @override
+  RegisteredBill({Key key, this.title}) : super(key: key);
+  final String title;
+  RegisteredBillPayment createState() => RegisteredBillPayment();
+
+
+}
+
+// ignore: must_be_immutable
+class RegisteredBillPayment extends State {
+  static final DateTime now = DateTime.now();
+  static final DateFormat formatter = DateFormat('yyyy-MM-dd');
+  final String formatted = formatter.format(now);
+  final myController = TextEditingController();
+  String radioItem = 'Immediate';
   String dropdownValue = 'Select Payee';
+  String _selectedPayee = "Select Payee";
+  String serviceProCat = "Service Provider Category";
+  String serviceProName = "Service Provider Name";
+  String servicePrefNo = "Payment Reference Number";
+  String AmountP = "Amount(LKR)";
+  String payType = "Immediate";
+  int _radioValue = 0;
+  int id = 1;
+  List<DropdownMenuItem<String>> PayeeList= [];
 
 
-  Widget _inputField(String title, Color border){
+
+      Widget _inputField(String title, Color border){
     return TextField(
       decoration: InputDecoration(
         hintText: title,
@@ -26,6 +52,21 @@ class RegisteredBillPayment extends StatelessWidget {
     );
 
   }
+
+  Widget _radioButtons(String text) {
+    return RadioListTile(
+      groupValue: radioItem,
+      title: Text(text),
+      value:text,
+      onChanged: (val) {
+        setState(() {
+          radioItem = val;
+        });
+      },
+    );
+
+  }
+
   Widget _entryField(String title, {bool isPassword = false}) {
     return Container(
 
@@ -53,30 +94,6 @@ class RegisteredBillPayment extends StatelessWidget {
     );
   }
 
-  Widget _dropDown() {
-    return DropdownButton<String>(
-      value: dropdownValue,
-      icon: Icon(Icons.keyboard_arrow_right,color: Colors.red,),
-      iconSize: 20,
-      elevation: 16,
-//      underline: Container(
-//        height: 2,
-//        color: Colors.deepPurpleAccent,
-//      ),
-//      onChanged: (String newValue) {
-//        setState(() {
-//          dropdownValue = newValue;
-//        });
-//      },
-      items: <String>['RashiniPhone', 'NuwanaPhone', 'ManujayaPhone', 'HirumiPhone']
-          .map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-    );
-  }
 
   Widget _SavingsAccount(){
     return Container(
@@ -91,7 +108,7 @@ class RegisteredBillPayment extends StatelessWidget {
                 children: <Widget>[
                  new Container(
                     decoration: new BoxDecoration (
-                     color:  CupertinoColors.extraLightBackgroundGray
+                     color:  CupertinoColors.quaternarySystemFill
                     ),
                   child: ListTile(
                     leading: Icon(Icons.account_balance_wallet, color: Colors.red),
@@ -122,34 +139,350 @@ class RegisteredBillPayment extends StatelessWidget {
 
   }
 
+  List<Widget> getFormWidget() {
+    List<Widget> formWidget = new List();
+    formWidget.add(new DropdownButton(
+      hint: new Text('Select Gender'),
+      items: PayeeList,
+      value: _selectedPayee,
+      onChanged: (value) {
+        setState(() {
+          _selectedPayee = value;
+        });
+      },
+      isExpanded: true,
+    ));
+
+    return formWidget;
+  }
+  void _ResetButton(){
+    setState(() {
+      _selectedPayee = "Select Payee";
+      serviceProCat = "Service Provider Category";
+      serviceProName = "Service Provider Name";
+      servicePrefNo = "Payment Reference Number";
+      myController.text="";
+    });
+  }
+
+  _displayDialog(BuildContext context) async {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+                borderRadius:
+                BorderRadius.circular(20.0)), //this right here
+            child: Container(
+              height: 480,
+              child: Padding(
+                padding: const EdgeInsets.all(0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+
+                      height: 60,
+                        width: 350,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.red),
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20.0),
+                                topRight: Radius.circular(20.0)),
+                            boxShadow: [
+                              BoxShadow(color:  Colors.red)
+                            ]
+                        ),
+                      child:Center(
+                      child:Text("Bill Payment",style: TextStyle(color: Colors.white,fontSize: 20),textAlign: TextAlign.center)
+                      )
+                    ),
+
+                      Container(
+                          margin: EdgeInsets.only(left: 20, right: 50),
+                          child:TextField(
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintStyle: TextStyle(fontSize: 16),
+                          hintText: 'Account Number'),
+                    )),
+
+                Container(
+                  margin: EdgeInsets.only(left: 25, right: 50),
+                  child:Text("201023910239402",style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold)),),
+                Container(
+                  margin: EdgeInsets.only(left: 20, right: 50),
+                  child:
+                    TextField(
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Service Provider'),
+                    ),),
+                Container(
+                  margin: EdgeInsets.only(left: 25, right: 50),
+                  child:Text(serviceProName,style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold))),
+                Container(
+                  margin: EdgeInsets.only(left: 20, right: 50),
+                  child:
+                    TextField(
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Payment Reference Number'),
+                    ),),
+                Container(
+                  margin: EdgeInsets.only(left: 25, right: 50),
+                  child:
+                    Text(servicePrefNo,style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold))),
+                Container(
+                  margin: EdgeInsets.only(left: 20, right: 50),
+                  child:
+                    TextField(
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Amount'),
+                    ),),
+                Container(
+                  margin: EdgeInsets.only(left: 25, right: 50),
+                  child:
+                    Text(myController.text,style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold))),
+                Container(
+                  margin: EdgeInsets.only(left: 20, right: 50),
+                  child:
+                    TextField(
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Date'),
+                    ),),
+                    Container(
+                        margin: EdgeInsets.only(left: 25, right: 50),
+                        child:
+                        Text(formatted,style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold))),
+                    Container(
+                        margin: EdgeInsets.only(left: 15),
+                      child: ButtonBar(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          ButtonTheme(
+                              minWidth: 130,
+                              child:RaisedButton(
+                                child: new Text('CANCEL'),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(100),
+                                  side: BorderSide(color: Colors.red),
+
+                                ),
+                                color: Colors.red,
+                                textColor: Colors.white,
+                                onPressed: ()=>Navigator.pop(context),
+                              )),
+                          ButtonTheme(
+                            minWidth: 130,
+                            child: RaisedButton(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(100),
+                                side: BorderSide(color: Colors.teal),
+                              ),
+                              color: Colors.teal,
+                              textColor: Colors.white,
+                              child: new Text('PROCEED'),
+                              onPressed: ()=>_displayDialogBoxSec(context),
+                            ),
+                          )
+                        ],
+                      )
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+  }
+
+  _displayDialogBoxSec(BuildContext context) async {
+  Navigator.pop(context);
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+                borderRadius:
+                BorderRadius.circular(20.0)), //this right here
+            child: Container(
+              height: 650,
+              child: Padding(
+                padding: const EdgeInsets.all(0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+
+                        height: 60,
+                        width: 350,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.red),
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20.0),
+                                topRight: Radius.circular(20.0)),
+                            boxShadow: [
+                              BoxShadow(color:  Colors.red)
+                            ]
+                        ),
+                        child:Center(
+                            child:Text("Bill Payment",style: TextStyle(color: Colors.white,fontSize: 20),textAlign: TextAlign.center,)
+                        )
+                    ),
+
+                    Container(
+                        margin: EdgeInsets.only(left: 20, right: 50),
+                        child:TextField(
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintStyle: TextStyle(fontSize: 16),
+                              hintText: 'Account Number'),
+                        )),
+
+                    Container(
+                      margin: EdgeInsets.only(left: 25, right: 50),
+                      child:Text("201023910239402",style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold)),),
+                    Container(
+                      margin: EdgeInsets.only(left: 20, right: 50),
+                      child:
+                      TextField(
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Service Provider'),
+                      ),),
+                    Container(
+                        margin: EdgeInsets.only(left: 25, right: 50),
+                        child:Text(serviceProName,style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold))),
+                    Container(
+                      margin: EdgeInsets.only(left: 20, right: 50),
+                      child:
+                      TextField(
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Transaction Reference Number'),
+                      ),),
+                    Container(
+                        margin: EdgeInsets.only(left: 25, right: 50),
+                        child:
+                        Text("RB1001200301032",style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold))),
+                    Container(
+                      margin: EdgeInsets.only(left: 20, right: 50),
+                      child:
+                      TextField(
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Amount'),
+                      ),),
+                    Container(
+                        margin: EdgeInsets.only(left: 25, right: 50),
+                        child:
+                        Text(myController.text,style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold))),
+                    Container(
+                      margin: EdgeInsets.only(left: 20, right: 50),
+                      child:
+                      TextField(
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Date'),
+                      ),),
+                    Container(
+                        margin: EdgeInsets.only(left: 25, right: 50),
+                        child:
+                        Text(formatted,style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold))),
+                    Container(
+                      margin: EdgeInsets.only(left: 20, right: 50),
+                      child:
+                      TextField(
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Status'),
+                      ),),
+                    Container(
+                        margin: EdgeInsets.only(left: 25, right: 50),
+                        child:
+                        Text("SUCCESS",style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.green))),
+                    Container(
+                      margin: EdgeInsets.only(left: 20, right: 50),
+                      child:
+                      TextField(
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Core Bank Response'),
+                      ),),
+                    Container(
+                        margin: EdgeInsets.only(left: 25, right: 50),
+                        child:
+                        Text("Transaction successfully completed",style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold))),
+
+                    Container(
+                        margin: EdgeInsets.only(left: 90),
+                        child: ButtonBar(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            ButtonTheme(
+                              minWidth: 130,
+                              child: RaisedButton(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(100),
+                                  side: BorderSide(color: Colors.teal),
+                                ),
+                                color: Colors.teal,
+                                textColor: Colors.white,
+                                child: new Text('OK'),
+                                onPressed: ()=>_success(context),
+                              ),
+                            )
+                          ],
+                        )
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+  }
+
+
+   _success(BuildContext context) async{
+    Navigator.pop(context);
+    _ResetButton();
+  }
   Widget _buttons(){
-    return Center(
+    return Container(
 
       child: ButtonBar(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           ButtonTheme(
+            minWidth: 130,
         child:RaisedButton(
           child: new Text('RESET'),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(100),
-              side: BorderSide(color: Colors.red)
+              side: BorderSide(color: Colors.red),
+
           ),
           color: Colors.red,
           textColor: Colors.white,
-          onPressed: (){},
+          onPressed: _ResetButton,
         )),
     ButtonTheme(
-
+      minWidth: 130,
        child: RaisedButton(
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(100),
-              side: BorderSide(color: Colors.red)
+              side: BorderSide(color: Colors.teal),
           ),
-          color: Colors.red,
+          color: Colors.teal,
           textColor: Colors.white,
           child: new Text('PAY'),
-          onPressed: (){},
+          onPressed: ()=>_displayDialog(context),
         ),
     )
       ],
@@ -157,6 +490,9 @@ class RegisteredBillPayment extends StatelessWidget {
     );
   }
 
+  Widget _date(){
+
+  }
   Widget _emailPasswordWidget() {
     return Column(
       children: <Widget>[
@@ -168,9 +504,67 @@ class RegisteredBillPayment extends StatelessWidget {
   }
 
 
+
+  Widget dropDown(){
+
+  }
+
+  void _OnChangeDrop(String value){
+
+        setState(() {
+          _selectedPayee = value;
+        });
+
+        switch(value){
+          case 'RashiniPhone': setState(() {
+                            serviceProCat = "Telecommunication";
+                            serviceProName = "Dialog";
+                            servicePrefNo="0776487176";
+                          });
+                          break;
+          case 'HirumiPhone': setState(() {
+                          serviceProCat = "Telecommunication";
+                          serviceProName = "Mobitel";
+                          servicePrefNo="0712243527";
+                        });
+                        break;
+          case 'Electricity Bill':setState(() {
+                          serviceProCat = "Electricity Bill";
+                          serviceProName = "CEB";
+                          servicePrefNo="CE99120378182";
+                        });
+                        break;
+          case 'Peo Tv':
+                    setState(() {
+                    serviceProCat = "Communication";
+                    serviceProName = "SLT";
+                    servicePrefNo="SLT9918293812";
+                    });
+                    break;
+
+        }
+
+  }
+  void _handleRadioValueChange(int value) {
+    setState(() {
+      _radioValue = value;
+
+      switch (_radioValue) {
+        case 0:
+          payType = "Immediate";
+          break;
+        case 1:
+
+            payType = "Future";
+
+          break;
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
+
     return Scaffold(
         drawer: NavDrawer(),
         appBar: AppBar(
@@ -205,16 +599,102 @@ class RegisteredBillPayment extends StatelessWidget {
                   alignment: Alignment.bottomLeft,
                   child : Text("Bill Payment Name")
               ),
-              _inputField("Service Provider category",Colors.grey),
-              _inputField("Service Provider name",Colors.grey),
-              _inputField("Payment Reference number",Colors.grey),
-              _inputField("Amount (LKR)",Colors.red),
+              Container(
+                margin: const EdgeInsets.all(5.0),
+                padding: const EdgeInsets.all(3.0),
+                width:380,
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(5),
+                    boxShadow: [
+                      BoxShadow(color:  CupertinoColors.quaternarySystemFill)
+                    ]
+                ),
+              child: DropdownButton<String>(
+                hint: Text('Select Payee',style:TextStyle(color: Colors.black87)),
+                isExpanded: true,
+//                style: TextStyle(color: Colors.red),
+                underline: Container(),
+                value: _selectedPayee,// this remo
+//                value: _selectedPayee,
+              icon: Icon(Icons.keyboard_arrow_right),
+                iconEnabledColor: Colors.red,
+                items: <String>['Select Payee','RashiniPhone', 'Peo Tv', 'Electricity Bill', 'HirumiPhone']
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+
+                  );
+                }).toList(),
+                onChanged: _OnChangeDrop,
+              ),
+              ),
+              _inputField(serviceProCat,Colors.grey),
+              _inputField(serviceProName,Colors.grey),
+              _inputField(servicePrefNo,Colors.grey),
+                  TextField(
+                    controller:myController,
+                  decoration: InputDecoration(
+                    hintText: "Amount (LKR)",
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.red),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.red),
+                    ),
+                    border: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.red),
+                    ),
+                  ),
+                ),
+              SizedBox(
+                height: 15,
+              ),
+              Align(
+                  alignment: Alignment.bottomLeft,
+                  child : Text("Payment Type")
+              ),
+              Theme(
+                data:Theme.of(context).copyWith(
+                    unselectedWidgetColor: Colors.red,
+
+                ) ,
+              child:Row(
+                children:<Widget>[
+
+                 new Radio(
+                      value: 0,
+                      groupValue: _radioValue,
+                      onChanged: _handleRadioValueChange,
+                      focusColor: Colors.red,
+                      activeColor: Colors.red,
+                      hoverColor: Colors.red,
+                    ),
+                    Text(
+                      'Immediate',
+                      style: new TextStyle(fontSize: 16.0),
+                    ),
+
+                  new Radio(
+                    value: 1,
+                    groupValue: _radioValue,
+                    onChanged: _handleRadioValueChange,
+                    focusColor: Colors.red,
+                    activeColor: Colors.red,
+                    hoverColor: Colors.red,
+                  ),
+                  Text(
+                    'Future',
+                    style: new TextStyle(fontSize: 16.0),
+                  ),
+                ]
+              ),
+              ),
               _buttons(),
 
-    SizedBox(
-    height: 20,
-    ),
-      ])
+
+            ])
     )
     )
     );
