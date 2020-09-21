@@ -5,6 +5,8 @@ import 'package:pan_asia_bank_app/screens/ManageAccount.dart';
 import 'package:pan_asia_bank_app/screens/MyProfile.dart';
 import 'package:pan_asia_bank_app/screens/RegisteredBillPayment.dart';
 import 'package:pan_asia_bank_app/screens/AccountSummary.dart';
+import 'package:pan_asia_bank_app/screens/OwnAccountTransfer.dart';
+
 
 
 class NavDrawer extends StatelessWidget {
@@ -67,7 +69,7 @@ class NavDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               Navigator.push(
-              context, MaterialPageRoute(builder: (context) => AccountSummary()));
+              context, MaterialPageRoute(builder: (context) => OwnAccount()));
             },
 
           ),

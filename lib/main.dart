@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pan_asia_bank_app/screens/AccountSummary.dart';
 import 'package:pan_asia_bank_app/screens/Login.dart';
+import 'package:pan_asia_bank_app/screens/FundTransferTransactionHistory.dart';
 import 'package:pan_asia_bank_app/widgets/NavDrawer.dart';
 import 'package:flutter/services.dart';
 
