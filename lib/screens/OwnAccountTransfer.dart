@@ -113,14 +113,16 @@ class OwnAccountTransfer extends State {
                       )),
 
                   Align(
-                      alignment: Alignment.centerRight,
+//                      alignment: Alignment.centerRight,
+                        alignment: Alignment(0.9, 10),
                       child: Text(
                           "LKR     15000.00",
                           style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15)
                       )
                   ),
                   Align(
-                      alignment: Alignment.centerRight,
+//                      alignment: Alignment.centerRight,
+                      alignment: Alignment(0.9, 10),
                       child: Text(
                           "Available balance",
                           style: TextStyle(color: Colors.grey,fontSize: 12)
@@ -477,6 +479,9 @@ class OwnAccountTransfer extends State {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height / 25,
+                      ),
                       Align(
                         alignment: Alignment.bottomLeft,
                         child: HtmlWidget("""<h2 style='color:red;'>Own Account</h2>"""),
@@ -487,6 +492,9 @@ class OwnAccountTransfer extends State {
                       Align(
                           alignment: Alignment.bottomLeft,
                           child : Text("Source Account")
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height / 30,
                       ),
                       _SavingsAccount(),
                       SizedBox(
@@ -509,7 +517,7 @@ class OwnAccountTransfer extends State {
                         ),
                       ),
                       SizedBox(
-                        height: 15,
+                        height: 45,
                       ),
                       Align(
                           alignment: Alignment.bottomLeft,
@@ -550,6 +558,10 @@ class OwnAccountTransfer extends State {
                               ),
                             ]
                         ),
+                      ),
+
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height / 10,
                       ),
                       _buttons(),
 

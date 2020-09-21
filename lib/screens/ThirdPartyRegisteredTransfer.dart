@@ -565,6 +565,9 @@ class ThirdPartyRegisteredTransfer extends State {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height / 25,
+                      ),
                       Align(
                         alignment: Alignment.bottomLeft,
                         child: HtmlWidget("""<h2 style='color:red;'>Third Party Registered</h2>"""),
@@ -693,6 +696,9 @@ class ThirdPartyRegisteredTransfer extends State {
                               ),
                             ]
                         ),
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height / 25,
                       ),
                       _buttons(),
 

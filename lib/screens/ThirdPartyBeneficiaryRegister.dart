@@ -310,9 +310,12 @@ class ThirdPartBeneficiaryRegister extends State {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height / 25,
+                      ),
                       Align(
                         alignment: Alignment.bottomLeft,
-                        child: HtmlWidget("""<h2 style='color:red;'>Third Part Beneficiary Register</h2>"""),
+                        child: HtmlWidget("""<h2 style='color:red;'>Third Party Beneficiary Register</h2>"""),
                       ),
                       SizedBox(
                         height: 5,
@@ -371,6 +374,9 @@ class ThirdPartBeneficiaryRegister extends State {
 
                       SizedBox(
                         height: 15,
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height / 25,
                       ),
 
 
