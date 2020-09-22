@@ -545,20 +545,20 @@ class ThirdPartyAdHocTransfer extends State {
     });
 
     switch(value){
-      case 'A': setState(() {
-        _selectedType = "A";
+      case 'Pan Aisa Bank Account': setState(() {
+        _selectedType = "Pan Aisa Bank Account";
 
       });
       break;
-      case 'B': setState(() {
-        _selectedType = "B";
+      case 'Another Bank Account (SLIPS)': setState(() {
+        _selectedType = "Another Bank Account (SLIPS)";
 
       });
       break;
 
-      case 'C':
+      case 'Another Bank Account (CEFT Real Time)':
         setState(() {
-          _selectedType = "c";
+          _selectedType = "Another Bank Account (CEFT Real Time)";
 
         });
         break;
@@ -707,7 +707,7 @@ class ThirdPartyAdHocTransfer extends State {
 //                value: _selectedPayee,
                           icon: Icon(Icons.keyboard_arrow_down),
                           iconEnabledColor: Colors.red,
-                          items: <String>['Fund Transfer Type','A', 'B', 'C']
+                          items: <String>['Fund Transfer Type','Pan Aisa Bank Account', 'Another Bank Account (SLIPS)', 'Another Bank Account (CEFT Real Time)']
                               .map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
