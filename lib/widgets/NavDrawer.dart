@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
+//import 'package:pan_asia_bank_app/screens/AdHocBillPaymentForm.dart';
 import 'package:pan_asia_bank_app/screens/Login.dart';
 import 'package:pan_asia_bank_app/screens/ManageAccount.dart';
 import 'package:pan_asia_bank_app/screens/MyProfile.dart';
 import 'package:pan_asia_bank_app/screens/RegisteredBillPayment.dart';
 import 'package:pan_asia_bank_app/screens/AccountSummary.dart';
+import 'package:pan_asia_bank_app/screens/OwnAccountTransfer.dart';
+import 'package:pan_asia_bank_app/screens/ThirdPartyAdHocTransfer.dart';
+import 'package:pan_asia_bank_app/screens/ThirdPartyBeneficiaryRegister.dart';
+import 'package:pan_asia_bank_app/screens/ThirdPartyRegisteredTransfer.dart';
+import 'package:pan_asia_bank_app/screens/FundTransferTransactionHistory.dart';
+
+
+
+
+
 
 
 class NavDrawer extends StatelessWidget {
@@ -32,21 +43,139 @@ class NavDrawer extends StatelessWidget {
           ),
 
           ListTile(
-            leading: Icon(Icons.input),
-            title: Text('Welcome' , style: const TextStyle(
-              color: Color(0xFFFFFFFF)
+            leading: Icon(Icons.dashboard),
+            title: Text('Dashboard' , style: const TextStyle(
+                color: Color(0xFFFFFFFF)
             ),
             ),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(
-              context, MaterialPageRoute(builder: (context) => AccountSummary()));
+                  context, MaterialPageRoute(builder: (context) => RegisteredBill()));
+            },
+          ),
+
+          ListTile(
+            leading: Icon(Icons.input),
+            title: Text('My Accounts' , style: const TextStyle(
+                color: Color(0xFFFFFFFF)
+            ),
+            ),
+            trailing: Icon(Icons.keyboard_arrow_right),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => AccountSummary()));
+            },
+          ),
+
+          ExpansionTile(
+            leading: Icon(Icons.input),
+            title: Text('Fund Transfer' , style: const TextStyle(
+
+                color: Color(0xFFFFFFFF)
+            ),
+            ),
+            children: <Widget>[
+              new ListTile(
+               title: const Text('Own Account',
+                style: const TextStyle(
+
+                 color: Color(0xFFFFFFFF)
+                 ),
+                 ),
+
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => OwnAccount()));
+               },
+                ),
+
+              new ListTile(
+                title: const Text('Third Party Registered',
+                  style: const TextStyle(
+
+                      color: Color(0xFFFFFFFF)
+                  ),
+                ),
+
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => ThirdPartyRegistered()));
+                },
+              ),
+              new ListTile(
+                title: const Text('Third Party Ad-Hoc',
+                  style: const TextStyle(
+
+                      color: Color(0xFFFFFFFF)
+                  ),
+                ),
+
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => ThirdPartyAdHoc()));
+                },
+              ),
+              new ListTile(
+                title: const Text('Register Beneficiary',
+                  style: const TextStyle(
+
+                      color: Color(0xFFFFFFFF)
+                  ),
+                ),
+
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => ThirdPartBeneficiary()));
+                },
+              ),
+              new ListTile(
+                title: const Text('Fund Transfer History',
+                  style: const TextStyle(
+
+                      color: Color(0xFFFFFFFF)
+                  ),
+                ),
+
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => FundTransferTransactionHistory()));
+                },
+              )
+            ],
+
+
+          ),
+
+          ListTile(
+            leading: Icon(Icons.receipt),
+            title: Text('Pay Bills' , style: const TextStyle(
+                color: Color(0xFFFFFFFF)
+            ),
+            ),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => RegisteredBill()));
             },
 
           ),
           ListTile(
             leading: Icon(Icons.verified_user),
-            title: Text('Profile',style: const TextStyle(
+            title: Text('Standing orders',style: const TextStyle(
+                color: Color(0xFFFFFFFF)
+            ),),
+            onTap: () => {Navigator.of(context).pop()},
+          ),
+          ListTile(
+            leading: Icon(Icons.payment),
+            title: Text('Card Services',style: const TextStyle(
                 color: Color(0xFFFFFFFF)
             ),),
             onTap: () => {
@@ -68,19 +197,26 @@ class NavDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.settings),
-            title: Text('Settings',style: const TextStyle(
+            title: Text('Preferences',style: const TextStyle(
+                color: Color(0xFFFFFFFF)
+            ),),
+            onTap: () => {Navigator.of(context).pop()},
+          ),
+          ListTile(
+            leading: Icon(Icons.location_on),
+            title: Text('ATM and Branch Locator',style: const TextStyle(
                 color: Color(0xFFFFFFFF)
             ),),
             onTap: () => {
               Navigator.of(context).pop(),
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => RegisteredBillPayment())
+                  context, MaterialPageRoute(builder: (context) => RegisteredBill())
               )},
 
           ),
           ListTile(
-            leading: Icon(Icons.border_color),
-            title: Text('Feedback',style: const TextStyle(
+            leading: Icon(Icons.local_phone),
+            title: Text('Contact Us',style: const TextStyle(
                 color: Color(0xFFFFFFFF)
             ),),
             onTap: () => {Navigator.of(context).pop()},

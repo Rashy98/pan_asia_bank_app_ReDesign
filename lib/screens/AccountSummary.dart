@@ -182,7 +182,8 @@ class AccountSummary extends StatelessWidget {
               ),
             ),
           );
-        });
+        }
+        );
   }
 
   @override
