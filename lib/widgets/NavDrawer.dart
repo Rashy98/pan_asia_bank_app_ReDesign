@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:pan_asia_bank_app/screens/AdHocBillPayment.dart';
 //import 'package:pan_asia_bank_app/screens/AdHocBillPaymentForm.dart';
 import 'package:pan_asia_bank_app/screens/Login.dart';
 import 'package:pan_asia_bank_app/screens/ManageAccount.dart';
 import 'package:pan_asia_bank_app/screens/MyProfile.dart';
+import 'package:pan_asia_bank_app/screens/PaymentHistory.dart';
+import 'package:pan_asia_bank_app/screens/RegisterPayee.dart';
 import 'package:pan_asia_bank_app/screens/RegisteredBillPayment.dart';
 import 'package:pan_asia_bank_app/screens/AccountSummary.dart';
 import 'package:pan_asia_bank_app/screens/OwnAccountTransfer.dart';
@@ -17,7 +20,15 @@ import 'package:pan_asia_bank_app/screens/FundTransferTransactionHistory.dart';
 
 
 
-class NavDrawer extends StatelessWidget {
+class NavDrawer extends StatefulWidget {
+  @override
+  NavDrawer({Key key, this.title}) : super(key: key);
+  final String title;
+  _NavDrawerD createState() => _NavDrawerD();
+
+
+}
+class _NavDrawerD extends State {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -51,7 +62,7 @@ class NavDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => RegisteredBill()));
+                  context, MaterialPageRoute(builder: (context) => RegisterPay()));
             },
           ),
 
@@ -71,6 +82,7 @@ class NavDrawer extends StatelessWidget {
 
           ExpansionTile(
             leading: Icon(Icons.input),
+            trailing: Icon(Icons.keyboard_arrow_right),
             title: Text('Fund Transfer' , style: const TextStyle(
 
                 color: Color(0xFFFFFFFF)
@@ -152,18 +164,76 @@ class NavDrawer extends StatelessWidget {
 
 
           ),
-
-          ListTile(
+          ExpansionTile(
             leading: Icon(Icons.receipt),
+            trailing: Icon(Icons.keyboard_arrow_right),
             title: Text('Pay Bills' , style: const TextStyle(
+
                 color: Color(0xFFFFFFFF)
             ),
+
             ),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => RegisteredBill()));
-            },
+            children: <Widget>[
+              new ListTile(
+                title: const Text('Registered Bill Payment',
+                  style: const TextStyle(
+
+                      color: Color(0xFFFFFFFF)
+                  ),
+                ),
+
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => RegisteredBill()));
+                },
+              ),
+
+              new ListTile(
+                title: const Text('Ad-hoc Bill payment',
+                  style: const TextStyle(
+
+                      color: Color(0xFFFFFFFF)
+                  ),
+                ),
+
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => AdHocBill()));
+                },
+              ),
+              new ListTile(
+                title: const Text('Register Payee',
+                  style: const TextStyle(
+
+                      color: Color(0xFFFFFFFF)
+                  ),
+                ),
+
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => RegisterPay()));
+                },
+              ),
+              new ListTile(
+                title: const Text('Payment History',
+                  style: const TextStyle(
+
+                      color: Color(0xFFFFFFFF)
+                  ),
+                ),
+
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => PaymentHistory()));
+                },
+              ),
+
+            ],
+
 
           ),
           ListTile(
@@ -210,7 +280,7 @@ class NavDrawer extends StatelessWidget {
             onTap: () => {
               Navigator.of(context).pop(),
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => RegisteredBill())
+                  context, MaterialPageRoute(builder: (context) => AdHocBill())
               )},
 
           ),
