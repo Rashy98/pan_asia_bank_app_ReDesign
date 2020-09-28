@@ -56,50 +56,109 @@ class ChangePassword extends StatelessWidget{
           title: Image.asset("assets/logo.png", fit: BoxFit.cover),
         ),
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-                margin: const EdgeInsets.only(top: 10),
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        alignment: Alignment.topLeft,
-                        margin: const EdgeInsets.only(left: 15, top: 20, bottom: 20),
-                        child: HtmlWidget("""<h2 style='color:red;'>Change Password</h2>"""),
+              margin: const EdgeInsets.only( top: 20, bottom: 20),
+              child:
+              HtmlWidget("""<h2 style='color:red;'>Change Password</h2>"""),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 0),
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            alignment: Alignment.center,
+                            child: _inputField('Current Password', Colors.grey),
+                          ),
+                          Container(
+                            alignment: Alignment.center,
+                            child: _inputField('New Password', Colors.grey),
+                          ),
+                          Container(
+                            alignment: Alignment.center,
+                            child:
+                            _inputField('Re - New Password', Colors.grey),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(top: 30),
+                              child: _buttons('Change Password', context)
+                          ),
+                        ],
                       ),
-                      Container(
-
-                        child:
-                          Column(
-                            children: [
-                              Container(
-                                alignment: Alignment.center,
-                                child: _inputField('Current Password', Colors.grey),
-                              ),
-                              Container(
-                                alignment: Alignment.center,
-                                child: _inputField('New Password', Colors.grey),
-                              ),
-                              Container(
-                                alignment: Alignment.center,
-                                child: _inputField('Re - New Password', Colors.grey),
-                              ),
-                              Container(
-                                  child: _buttons('Change Password', context)
-                              ),
-                            ],
-                          )
-                      )
-
-
-
-                    ],
-                  ),
-                )
+                    ),
+                    SizedBox(
+                      height: 250,
+                    )
+                  ],
+                ),
+              ),
             )
           ],
         )
+
+
+
+
+//        Center(
+//          child: ListView(
+//            shrinkWrap: true,
+//            children: [
+//              Column(
+//                children: [
+//                  Container(
+//                      margin: const EdgeInsets.only(top: 10),
+//                      padding: EdgeInsets.symmetric(horizontal: 20),
+//                      child: SingleChildScrollView(
+//                        child: Column(
+//                          children: <Widget>[
+//                            Container(
+//                              alignment: Alignment.topLeft,
+//                              margin: const EdgeInsets.only(left: 15, top: 20, bottom: 20),
+//                              child: HtmlWidget("""<h2 style='color:red;'>Change Password</h2>"""),
+//                            ),
+//                            Container(
+//                                child:
+//                                Column(
+//                                  children: [
+//                                    Container(
+//                                      alignment: Alignment.center,
+//                                      child: _inputField('Current Password', Colors.grey),
+//                                    ),
+//                                    Container(
+//                                      alignment: Alignment.center,
+//                                      child: _inputField('New Password', Colors.grey),
+//                                    ),
+//                                    Container(
+//                                      alignment: Alignment.center,
+//                                      child: _inputField('Re - New Password', Colors.grey),
+//                                    ),
+//                                    Container(
+//                                        child: _buttons('Change Password', context)
+//                                    ),
+//                                  ],
+//                                )
+//                            )
+//
+//
+//
+//                          ],
+//                        ),
+//                      )
+//                  )
+//                ],
+//              )
+//            ],
+//          ),
+//        )
     );
   }
 

@@ -17,7 +17,7 @@ class AccountSummary extends StatelessWidget {
                  child: InkWell(
                    splashColor: Colors.redAccent.withAlpha(30),
                    onTap: (){
-                     dialog();
+                     _displayDialog(buildContext);
                    },
                    child: Container(
                      width: 380,
@@ -81,7 +81,7 @@ class AccountSummary extends StatelessWidget {
               child: InkWell(
                 splashColor: Colors.redAccent.withAlpha(30),
                 onTap: (){
-                  print('Card Tapped');
+                  _displayDialog(buildContext);
                 },
                 child: Container(
                   width: 380,
@@ -113,7 +113,7 @@ class AccountSummary extends StatelessWidget {
                               Text('Available Amount',
                                 style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),
                               ),
-                              Text('LKR 1500.00',
+                              Text('LKR 1200.00',
                                 style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15, color: Colors.blueAccent),
                               ),
                             ],
@@ -136,6 +136,145 @@ class AccountSummary extends StatelessWidget {
         )
     )
   ];
+
+  static _displayDialog(BuildContext context) async {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+                borderRadius:
+                BorderRadius.circular(20.0)), //this right here
+            child: Container(
+              height: 360,
+              child: Padding(
+                padding: const EdgeInsets.all(0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+
+                        height: 60,
+                        width: 350,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.red),
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20.0),
+                                topRight: Radius.circular(20.0)),
+                            boxShadow: [
+                              BoxShadow(color:  Colors.red)
+                            ]
+                        ),
+                        child:Center(
+                            child:Text("Bill Payment",style: TextStyle(color: Colors.white,fontSize: 20),textAlign: TextAlign.center)
+                        )
+                    ),
+
+                    Container(
+                      margin: const EdgeInsets.only(left: 25, top: 25, right: 25),
+                      alignment: Alignment.centerLeft,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Account Number',
+                            style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15, color: Colors.redAccent),
+                          ),
+                          Text('12345678',
+                            style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15, color: Colors.redAccent),
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(left: 25, top: 15, right: 25),
+                      alignment: Alignment.centerLeft,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Account Name',
+                            style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),
+                          ),
+                          Text('R.S.M. Premathilaka',
+                            style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15, color: Colors.blueAccent),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(left: 25, top: 15, right: 25),
+                      alignment: Alignment.centerLeft,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Lien Amount',
+                            style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),
+                          ),
+                          Text('LKR 00.00',
+                            style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15, color: Colors.blueAccent),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(left: 25, top: 15, right: 25),
+                      alignment: Alignment.centerLeft,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Float Balance',
+                            style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),
+                          ),
+                          Text('LKR 00.00',
+                            style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15, color: Colors.blueAccent),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(left: 25, top: 15, right: 25),
+                      alignment: Alignment.centerLeft,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Available Amount',
+                            style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),
+                          ),
+                          Text('LKR 1200.00',
+                            style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15, color: Colors.blueAccent),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                        margin: EdgeInsets.only(left: 100, top : 20),
+                        child: ButtonBar(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            ButtonTheme(
+                                minWidth: 130,
+                                child:RaisedButton(
+                                  child: new Text('CANCEL'),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(100),
+                                    side: BorderSide(color: Colors.red),
+
+                                  ),
+                                  color: Colors.red,
+                                  textColor: Colors.white,
+                                  onPressed: ()=>Navigator.pop(context),
+                                )),
+
+                          ],
+                        )
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+  }
 
   static dialog(){
 //    return showDialog(

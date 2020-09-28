@@ -63,7 +63,12 @@ class Login extends StatelessWidget{
 //                Image.asset("assets/logo.png", fit: BoxFit.cover,),
 //              ]
 //            )
-            title: Image.asset("assets/logo.png", fit: BoxFit.cover, ),
+            title: Container(
+              padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width),
+              child: Image.asset("assets/logo.png", fit: BoxFit.cover, ),
+            ),
+
+//            Image.asset("assets/logo.png", fit: BoxFit.cover, ),
             centerTitle: true,
           ),
         ),
@@ -114,6 +119,10 @@ class Login extends StatelessWidget{
                 ),
                 TableRow(
                   children: [
+//                    Container(
+//                      margin: EdgeInsets.all(10),
+//                      child: Text('Hello'),
+//                    ),
                     Icon(Icons.account_circle),
                     Icon(Icons.access_alarm)
                   ]

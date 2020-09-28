@@ -1,8 +1,12 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pan_asia_bank_app/widgets/NavDrawer.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 
 
 
@@ -451,6 +455,7 @@ class RegisteredBillPayment extends State {
 
    _success(BuildContext context) async{
     Navigator.pop(context);
+    PayBill();
     _ResetButton();
   }
   Widget _buttons(){
@@ -561,6 +566,32 @@ class RegisteredBillPayment extends State {
       }
     });
   }
+
+
+  Future<http.Response> PayBill() async {
+    String url =
+        'https://uee-pan-backend.herokuapp.com/user/pushBillPaymentHistory/';
+    Map map = {
+      '_id':'5f7094ced1c8261f4f9b756f',
+      'BillPaymentHistory':[{"payeeName":_selectedPayee,"category":serviceProCat,"ServiceProName":serviceProName,"refNo":servicePrefNo,"Amount":myController.text,"type":"Ad-hoc"}]
+    };
+    print(await apiRequest(url, map));
+  }
+
+
+  Future<String> apiRequest(String url, Map jsonMap) async {
+    HttpClient httpClient = new HttpClient();
+    HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
+    request.headers.set('content-type', 'application/json');
+    request.add(utf8.encode(json.encode(jsonMap)));
+    HttpClientResponse response = await request.close();
+    // todo - you should check the response.statusCode
+    String reply = await response.transform(utf8.decoder).join();
+    httpClient.close();
+    return reply;
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
