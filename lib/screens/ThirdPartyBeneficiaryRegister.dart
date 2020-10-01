@@ -150,19 +150,19 @@ class ThirdPartBeneficiaryRegister extends State {
   void _ResetButton(){
     setState(() {
 
-      beneName = "Beneficiary Name";
-      beneAccNo = "Beneficiary Account/Card Number";
-      bankName = "Beneficiary Bank Name";
-      beneEmail = "Beneficiary Email";
+      beneName = " ";
+      beneAccNo = " ";
+      bankName = " ";
+      beneEmail = " ";
 
     });
   }
   Future<http.Response> AddPayee() async {
     String url =
-        'https://uee-pan-backend.herokuapp.com/user/pushRegisteredPayeesFund/';
+        'http://10.0.2.2:8000/user/pushRegisteredPayeesFund/';
     Map map = {
       '_id':'5f7094ced1c8261f4f9b756f',
-      'RegisteredPayeesBill':[{"name":payeeNameController.text,"accNumber":accountNumberController,"bankName":bankNameController,"email":payeeEmailController}]
+      'RegisteredPayeesFund':[{"name":payeeNameController.text,"accNumber":accountNumberController.text,"bankName":bankNameController.text,"email":payeeEmailController.text}]
     };
     print(await apiRequest(url, map));
   }
@@ -416,7 +416,7 @@ class ThirdPartBeneficiaryRegister extends State {
                       ),
 //                      _inputField(beneAccNo,Colors.grey),
                       TextField(
-                        controller:payeeNameController,
+                        controller:accountNumberController,
                         decoration: InputDecoration(
                           hintText: beneAccNo,
                           enabledBorder: UnderlineInputBorder(
@@ -432,7 +432,7 @@ class ThirdPartBeneficiaryRegister extends State {
                       ),
 //                      _inputField(bankName,Colors.grey),
                       TextField(
-                        controller:payeeNameController,
+                        controller:bankNameController,
                         decoration: InputDecoration(
                           hintText: bankName,
                           enabledBorder: UnderlineInputBorder(
@@ -448,7 +448,7 @@ class ThirdPartBeneficiaryRegister extends State {
                       ),
 //                      _inputField(beneEmail,Colors.grey),
                       TextField(
-                        controller:payeeNameController,
+                        controller:payeeEmailController,
                         decoration: InputDecoration(
                           hintText: beneEmail,
                           enabledBorder: UnderlineInputBorder(
