@@ -150,10 +150,10 @@ class ThirdPartBeneficiaryRegister extends State {
   void _ResetButton(){
     setState(() {
 
-      beneName = " ";
-      beneAccNo = " ";
-      bankName = " ";
-      beneEmail = " ";
+      payeeNameController.text = " ";
+      accountNumberController.text = " ";
+      bankNameController.text = " ";
+      payeeEmailController.text = " ";
 
     });
   }

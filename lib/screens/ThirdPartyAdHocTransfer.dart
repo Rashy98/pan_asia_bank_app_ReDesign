@@ -1,8 +1,13 @@
+import 'dart:io';
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pan_asia_bank_app/widgets/NavDrawer.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
+
 
 
 
@@ -480,6 +485,7 @@ class ThirdPartyAdHocTransfer extends State {
 
   _success(BuildContext context) async{
     Navigator.pop(context);
+     AddPayee();
     _ResetButton();
   }
   Widget _buttons(){
@@ -597,6 +603,28 @@ class ThirdPartyAdHocTransfer extends State {
           break;
       }
     });
+  }
+  Future<http.Response> AddPayee() async {
+    String url =
+        'http://10.0.2.2:8000/user/pushFundTransferHistory/';
+    Map map = {
+      '_id':'5f7094ced1c8261f4f9b756f',
+      'RegisteredPayeesFund':[{"name":myController1.text,"accNumber":myController2.text,"bankName":myController5.text,"email":myController3.text,"remark":myController4.text,"amount":myController.text,"date":formatted,"reference":"RB1001200301032",}]
+    };
+    print(await apiRequest(url, map));
+  }
+
+
+  Future<String> apiRequest(String url, Map jsonMap) async {
+    HttpClient httpClient = new HttpClient();
+    HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
+    request.headers.set('content-type', 'application/json');
+    request.add(utf8.encode(json.encode(jsonMap)));
+    HttpClientResponse response = await request.close();
+    // todo - you should check the response.statusCode
+    String reply = await response.transform(utf8.decoder).join();
+    httpClient.close();
+    return reply;
   }
   @override
   Widget build(BuildContext context) {
