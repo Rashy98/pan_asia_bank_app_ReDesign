@@ -28,6 +28,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_widget_from_html:
+  table_calendar: ^2.2.3
   flutter_launcher_icons: ^0.7.3
 
 
