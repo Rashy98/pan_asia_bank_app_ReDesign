@@ -159,7 +159,7 @@ class ThirdPartBeneficiaryRegister extends State {
   }
   Future<http.Response> AddPayee() async {
     String url =
-        'http://10.0.2.2:8000/user/pushRegisteredPayeesFund/';
+        'https://uee-pan-backend.herokuapp.com/user/pushRegisteredPayeesFund/';
     Map map = {
       '_id':'5f7094ced1c8261f4f9b756f',
       'RegisteredPayeesFund':[{"name":payeeNameController.text,"accNumber":accountNumberController.text,"bankName":bankNameController.text,"email":payeeEmailController.text}]

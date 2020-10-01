@@ -606,10 +606,10 @@ class ThirdPartyAdHocTransfer extends State {
   }
   Future<http.Response> AddPayee() async {
     String url =
-        'http://10.0.2.2:8000/user/pushFundTransferHistory/';
+        'https://uee-pan-backend.herokuapp.com/user/pushFundTransferHistory/';
     Map map = {
       '_id':'5f7094ced1c8261f4f9b756f',
-      'RegisteredPayeesFund':[{"name":myController1.text,"accNumber":myController2.text,"bankName":myController5.text,"email":myController3.text,"remark":myController4.text,"amount":myController.text,"date":formatted,"reference":"RB1001200301032",}]
+      'FundTransferHistory':[{"name":myController1.text,"accNumber":myController2.text,"bankName":myController5.text,"email":myController3.text,"remark":myController4.text,"amount":myController.text,"date":formatted,"reference":"RB1001200301032",}]
     };
     print(await apiRequest(url, map));
   }
