@@ -1,8 +1,13 @@
+import 'dart:io';
+import 'dart:convert';
+
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pan_asia_bank_app/widgets/NavDrawer.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 
 
 
@@ -21,6 +26,10 @@ class ThirdPartBeneficiaryRegister extends State {
   static final DateFormat formatter = DateFormat('yyyy-MM-dd');
   final String formatted = formatter.format(now);
   final myController = TextEditingController();
+  final payeeNameController = TextEditingController();
+  final accountNumberController = TextEditingController();
+  final bankNameController = TextEditingController();
+  final payeeEmailController = TextEditingController();
   String radioItem = 'Account';
   String beneName = "Beneficiary Name";
   String beneAccNo = "Beneficiary Account/Card Number";
@@ -148,6 +157,28 @@ class ThirdPartBeneficiaryRegister extends State {
 
     });
   }
+  Future<http.Response> AddPayee() async {
+    String url =
+        'https://uee-pan-backend.herokuapp.com/user/pushRegisteredPayeesFund/';
+    Map map = {
+      '_id':'5f7094ced1c8261f4f9b756f',
+      'RegisteredPayeesBill':[{"name":payeeNameController.text,"accNumber":accountNumberController,"bankName":bankNameController,"email":payeeEmailController}]
+    };
+    print(await apiRequest(url, map));
+  }
+
+
+  Future<String> apiRequest(String url, Map jsonMap) async {
+    HttpClient httpClient = new HttpClient();
+    HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
+    request.headers.set('content-type', 'application/json');
+    request.add(utf8.encode(json.encode(jsonMap)));
+    HttpClientResponse response = await request.close();
+    // todo - you should check the response.statusCode
+    String reply = await response.transform(utf8.decoder).join();
+    httpClient.close();
+    return reply;
+  }
 
   _displayDialog(BuildContext context) async {
     return showDialog(
@@ -221,6 +252,7 @@ class ThirdPartBeneficiaryRegister extends State {
 
   _success(BuildContext context) async{
     Navigator.pop(context);
+    AddPayee();
     _ResetButton();
   }
   Widget _buttons(){
@@ -366,10 +398,70 @@ class ThirdPartBeneficiaryRegister extends State {
                         ),
                       ),
 
-                      _inputField(beneName,Colors.grey),
-                      _inputField(beneAccNo,Colors.grey),
-                      _inputField(bankName,Colors.grey),
-                      _inputField(beneEmail,Colors.grey),
+//                      _inputField(beneName,Colors.grey),
+                      TextField(
+                        controller:payeeNameController,
+                        decoration: InputDecoration(
+                          hintText: beneName,
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                          border: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                        ),
+                      ),
+//                      _inputField(beneAccNo,Colors.grey),
+                      TextField(
+                        controller:payeeNameController,
+                        decoration: InputDecoration(
+                          hintText: beneAccNo,
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                          border: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                        ),
+                      ),
+//                      _inputField(bankName,Colors.grey),
+                      TextField(
+                        controller:payeeNameController,
+                        decoration: InputDecoration(
+                          hintText: bankName,
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                          border: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                        ),
+                      ),
+//                      _inputField(beneEmail,Colors.grey),
+                      TextField(
+                        controller:payeeNameController,
+                        decoration: InputDecoration(
+                          hintText: beneEmail,
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                          border: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                        ),
+                      ),
 
 
                       SizedBox(
