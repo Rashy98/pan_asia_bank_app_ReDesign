@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pan_asia_bank_app/widgets/NavDrawer.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:intl/intl.dart';
@@ -35,8 +36,14 @@ class RegisteredBillPayment extends State {
   String payType = "Immediate";
   int _radioValue = 0;
   int id = 1;
+  bool _validate = false;
+  bool mecVal = false;
   List<DropdownMenuItem<String>> PayeeList= [];
 
+  @override
+  void initState() {
+    _fetchUser();
+  }
 
 
       Widget _inputField(String title, Color border){
@@ -487,7 +494,15 @@ class RegisteredBillPayment extends State {
           color: Colors.teal,
           textColor: Colors.white,
           child: new Text('PAY'),
-          onPressed: ()=>_displayDialog(context),
+          onPressed:(){
+                 setState(() {
+                   _selectedPayee == "Select Payee"? mecVal=true :mecVal=false;
+                 myController.text.isEmpty ? _validate = true : _validate = false;
+                 });
+                 if(_validate == false ) {
+                 _displayDialog(context);
+                 }
+          },
         ),
     )
       ],
@@ -509,10 +524,39 @@ class RegisteredBillPayment extends State {
   }
 
 
+  List users = List();
+  var isLoading = true;
 
-  Widget dropDown(){
-
+  void _fetchUser() async{
+    final response =  await http.get("https://uee-pan-backend.herokuapp.com/user/");
+    if (response.statusCode == 200) {
+      users = json.decode(response.body) as List;
+      setState(() {
+        isLoading = false;
+      });
+    } else {
+      throw Exception('Failed to load data');
+    }
   }
+
+  List DDitems = [];
+  populateDrop(){
+    if(users.length != 0 && users.length != null) {
+      print("users:" + users.length.toString());
+//      for (var x = 0; x <= users.length; x++) {
+        users.map((e) => {
+          if(e['id'] =="5f7094ced1c8261f4f9b756f" ){
+            print("userss:" +e['RegisteredPayeesBill'].length.toString()),
+            for (var y = 0; y < e['RegisteredPayeesBill'].length; y++) {
+             DDitems.add(e['RegisteredPayeesBill'][y]['name'])
+            }
+          }
+        });
+//        if (users[x]['_id'] == "5f7094ced1c8261f4f9b756f") {
+
+//        }
+        }
+      }
 
   void _OnChangeDrop(String value){
 
@@ -595,7 +639,8 @@ class RegisteredBillPayment extends State {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
-
+    populateDrop();
+    print(DDitems);
     return Scaffold(
         drawer: NavDrawer(),
         appBar: AppBar(
@@ -650,7 +695,9 @@ class RegisteredBillPayment extends State {
 //                value: _selectedPayee,
               icon: Icon(Icons.keyboard_arrow_right),
                 iconEnabledColor: Colors.red,
-                items: <String>['Select Payee','RashiniPhone', 'Peo Tv', 'Electricity Bill', 'HirumiPhone']
+                items:
+//                DDitems
+                <String>['Select Payee','RashiniPhone', 'Peo Tv', 'Electricity Bill', 'HirumiPhone']
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
@@ -661,11 +708,15 @@ class RegisteredBillPayment extends State {
                 onChanged: _OnChangeDrop,
               ),
               ),
+              mecVal? Text("Please select a payee",style: TextStyle(color: Colors.red)):Text(""),
               _inputField(serviceProCat,Colors.grey),
               _inputField(serviceProName,Colors.grey),
               _inputField(servicePrefNo,Colors.grey),
                   TextField(
                     controller:myController,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly],
                   decoration: InputDecoration(
                     hintText: "Amount (LKR)",
                     enabledBorder: UnderlineInputBorder(
@@ -677,6 +728,7 @@ class RegisteredBillPayment extends State {
                     border: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.red),
                     ),
+                    errorText: _validate ? 'Value Can\'t Be Empty' : null,
                   ),
                 ),
               SizedBox(

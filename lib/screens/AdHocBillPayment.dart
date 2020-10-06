@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pan_asia_bank_app/widgets/NavDrawer.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:intl/intl.dart';
@@ -40,6 +41,10 @@ class AdHocBillPayment extends State {
   int _radioValue = 0;
   int id = 1;
   bool _value1 = false;
+  bool _validate = false;
+  bool _Svalidate = false;
+  bool catVal = false;
+  bool mecVal = false;
   List<DropdownMenuItem<String>> PayeeList= [];
 
 
@@ -207,139 +212,148 @@ class AdHocBillPayment extends State {
 
   }
   _displayDialog(BuildContext context) async {
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return Dialog(
-            shape: RoundedRectangleBorder(
-                borderRadius:
-                BorderRadius.circular(20.0)), //this right here
-            child: Container(
-              height: 480,
-              child: Padding(
-                padding: const EdgeInsets.all(0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
+      return showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Dialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius:
+                  BorderRadius.circular(20.0)), //this right here
+              child: Container(
+                height: 480,
+                child: Padding(
+                  padding: const EdgeInsets.all(0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
 
-                        height: 60,
-                        width: 350,
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.red),
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20.0),
-                                topRight: Radius.circular(20.0)),
-                            boxShadow: [
-                              BoxShadow(color:  Colors.red)
-                            ]
-                        ),
-                        child:Center(
-                            child:Text("Bill Payment",style: TextStyle(color: Colors.white,fontSize: 20),textAlign: TextAlign.center)
-                        )
-                    ),
+                          height: 60,
+                          width: 350,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.red),
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(20.0),
+                                  topRight: Radius.circular(20.0)),
+                              boxShadow: [
+                                BoxShadow(color: Colors.red)
+                              ]
+                          ),
+                          child: Center(
+                              child: Text("Bill Payment", style: TextStyle(
+                                  color: Colors.white, fontSize: 20),
+                                  textAlign: TextAlign.center)
+                          )
+                      ),
 
-                    Container(
+                      Container(
+                          margin: EdgeInsets.only(left: 20, right: 50),
+                          child: TextField(
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintStyle: TextStyle(fontSize: 16),
+                                hintText: 'Account Number'),
+                          )),
+
+                      Container(
+                        margin: EdgeInsets.only(left: 25, right: 50),
+                        child: Text("201023910239402", style: TextStyle(
+                            fontSize: 17, fontWeight: FontWeight.bold)),),
+                      Container(
                         margin: EdgeInsets.only(left: 20, right: 50),
-                        child:TextField(
+                        child:
+                        TextField(
                           decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintStyle: TextStyle(fontSize: 16),
-                              hintText: 'Account Number'),
-                        )),
+                              hintText: 'Provider category & Merchant'),
+                        ),),
+                      Container(
+                          margin: EdgeInsets.only(left: 25, right: 50),
+                          child: Text(_selectedCat + "-" + _selectedMerch,
+                              style: TextStyle(
+                                  fontSize: 17, fontWeight: FontWeight.bold))),
 
-                    Container(
-                      margin: EdgeInsets.only(left: 25, right: 50),
-                      child:Text("201023910239402",style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold)),),
-                    Container(
-                      margin: EdgeInsets.only(left: 20, right: 50),
-                      child:
-                      TextField(
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Provider category & Merchant'),
-                      ),),
-                    Container(
-                        margin: EdgeInsets.only(left: 25, right: 50),
-                        child:Text(_selectedCat+"-"+_selectedMerch,style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold))),
+                      Container(
+                        margin: EdgeInsets.only(left: 20, right: 50),
+                        child:
+                        TextField(
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'Payment Reference Number'),
+                        ),),
+                      Container(
+                          margin: EdgeInsets.only(left: 25, right: 50),
+                          child:
+                          Text(servicePrefNoController.text, style: TextStyle(
+                              fontSize: 17, fontWeight: FontWeight.bold))),
+                      Container(
+                        margin: EdgeInsets.only(left: 20, right: 50),
+                        child:
+                        TextField(
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'Amount'),
+                        ),),
+                      Container(
+                          margin: EdgeInsets.only(left: 25, right: 50),
+                          child:
+                          Text("Rs. " + myController.text, style: TextStyle(
+                              fontSize: 17, fontWeight: FontWeight.bold))),
+                      Container(
+                        margin: EdgeInsets.only(left: 20, right: 50),
+                        child:
+                        TextField(
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'Date'),
+                        ),),
+                      Container(
+                          margin: EdgeInsets.only(left: 25, right: 50),
+                          child:
+                          Text(formatted, style: TextStyle(
+                              fontSize: 17, fontWeight: FontWeight.bold))),
+                      Container(
+                          margin: EdgeInsets.only(left: 15),
+                          child: ButtonBar(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              ButtonTheme(
+                                  minWidth: 130,
+                                  child: RaisedButton(
+                                    child: new Text('CANCEL'),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(100),
+                                      side: BorderSide(color: Colors.red),
 
-                    Container(
-                      margin: EdgeInsets.only(left: 20, right: 50),
-                      child:
-                      TextField(
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Payment Reference Number'),
-                      ),),
-                    Container(
-                        margin: EdgeInsets.only(left: 25, right: 50),
-                        child:
-                        Text(servicePrefNoController.text,style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold))),
-                    Container(
-                      margin: EdgeInsets.only(left: 20, right: 50),
-                      child:
-                      TextField(
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Amount'),
-                      ),),
-                    Container(
-                        margin: EdgeInsets.only(left: 25, right: 50),
-                        child:
-                        Text("Rs. "+myController.text,style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold))),
-                    Container(
-                      margin: EdgeInsets.only(left: 20, right: 50),
-                      child:
-                      TextField(
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Date'),
-                      ),),
-                    Container(
-                        margin: EdgeInsets.only(left: 25, right: 50),
-                        child:
-                        Text(formatted,style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold))),
-                    Container(
-                        margin: EdgeInsets.only(left: 15),
-                        child: ButtonBar(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            ButtonTheme(
+                                    ),
+                                    color: Colors.red,
+                                    textColor: Colors.white,
+                                    onPressed: () => Navigator.pop(context),
+                                  )),
+                              ButtonTheme(
                                 minWidth: 130,
-                                child:RaisedButton(
-                                  child: new Text('CANCEL'),
+                                child: RaisedButton(
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(100),
-                                    side: BorderSide(color: Colors.red),
-
+                                    side: BorderSide(color: Colors.teal),
                                   ),
-                                  color: Colors.red,
+                                  color: Colors.teal,
                                   textColor: Colors.white,
-                                  onPressed: ()=>Navigator.pop(context),
-                                )),
-                            ButtonTheme(
-                              minWidth: 130,
-                              child: RaisedButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(100),
-                                  side: BorderSide(color: Colors.teal),
+                                  child: new Text('PROCEED'),
+                                  onPressed: () =>
+                                      _displayDialogBoxSec(context),
                                 ),
-                                color: Colors.teal,
-                                textColor: Colors.white,
-                                child: new Text('PROCEED'),
-                                onPressed: ()=>_displayDialogBoxSec(context),
-                              ),
-                            )
-                          ],
-                        )
-                    ),
-                  ],
+                              )
+                            ],
+                          )
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        });
+            );
+          });
   }
 
   _displayDialogBoxSec(BuildContext context) async {
@@ -700,7 +714,17 @@ class AdHocBillPayment extends State {
                 color: Colors.teal,
                 textColor: Colors.white,
                 child: new Text('PAY'),
-                onPressed: ()=>_displayDialog(context),
+                onPressed: (){
+                  setState(() {
+                    _selectedCat == "Select category"? catVal=true :catVal=false;
+                    _selectedMerch == "Select Merchant"? mecVal=true :mecVal=false;
+                    myController.text.isEmpty ? _validate = true : _validate = false;
+                    servicePrefNoController.text.isEmpty ? _Svalidate = true : _Svalidate = false;
+                  });
+                  if(_validate == false && _Svalidate == false) {
+                    _displayDialog(context);
+                  }
+                },
               ),
             )
           ],
@@ -819,9 +843,8 @@ class AdHocBillPayment extends State {
                           onChanged: _OnChangeDrop,
                         ),
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      catVal? Text("Please select a category",style: TextStyle(color: Colors.red)):Text(""),
+
                       Align(
                           alignment: Alignment.bottomLeft,
                           child : Text("Service Merchant")
@@ -858,9 +881,7 @@ class AdHocBillPayment extends State {
                           onChanged: _OnChangeDropMerch,
                         ),
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      mecVal? Text("Please select a merchant",style: TextStyle(color: Colors.red)):Text(""),
                       TextField(
                         controller:servicePrefNoController,
                         decoration: InputDecoration(
@@ -874,10 +895,15 @@ class AdHocBillPayment extends State {
                           border: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.red),
                           ),
+                          errorText: _Svalidate ? 'Value Can\'t Be Empty' : null,
                         ),
                       ),
                       TextField(
                         controller:myController,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly],
+
                         decoration: InputDecoration(
                           hintText: "Amount (LKR)",
                           enabledBorder: UnderlineInputBorder(
@@ -889,6 +915,7 @@ class AdHocBillPayment extends State {
                           border: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.red),
                           ),
+                          errorText: _validate ? 'Value Can\'t Be Empty' : null,
                         ),
                       ),
                       SizedBox(
