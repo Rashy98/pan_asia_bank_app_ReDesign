@@ -37,6 +37,10 @@ class RegistePayee extends State {
   String payType = "Immediate";
   int _radioValue = 0;
   int id = 1;
+  bool _PRvalidate = false;
+  bool _PNvalidate = false;
+  bool catVal = false;
+  bool mecVal = false;
   List<DropdownMenuItem<String>> PayeeList= [];
 
 
@@ -278,7 +282,17 @@ class RegistePayee extends State {
                 color: Colors.teal,
                 textColor: Colors.white,
                 child: new Text('ADD'),
-                onPressed: ()=>_displayDialogBoxSec(context),
+                onPressed: () {
+                  setState(() {
+                    _selectedCat == "Select category"? catVal=true :catVal=false;
+                    _selectedMerch == "Select Merchant"? mecVal=true :mecVal=false;
+                    myController.text.isEmpty ? _PRvalidate = true : _PRvalidate = false;
+                    payeeNameController.text.isEmpty ? _PNvalidate = true : _PNvalidate = false;
+                  });
+                  if (_PRvalidate == false && _PNvalidate == false && _selectedCat != "Select category" && _selectedMerch != "Select Merchant") {
+                    _displayDialogBoxSec(context);
+                  }
+                },
               ),
             )
           ],
@@ -415,6 +429,7 @@ class RegistePayee extends State {
                           border: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.grey),
                           ),
+                          errorText: _PNvalidate ? 'Value Can\'t Be Empty' : null,
                         ),
                       ),
                       SizedBox(
@@ -455,8 +470,9 @@ class RegistePayee extends State {
                           onChanged: _OnChangeDrop,
                         ),
                       ),
+                     catVal? Text("Please select a category",style: TextStyle(color: Colors.red)):Text(""),
                       SizedBox(
-                        height: 50,
+                        height: 25,
                       ),
                       Align(
                           alignment: Alignment.bottomLeft,
@@ -494,8 +510,9 @@ class RegistePayee extends State {
                           onChanged: _OnChangeDropMerch,
                         ),
                       ),
+                      mecVal? Text("Please select a merchant",style: TextStyle(color: Colors.red)):Text(""),
                       SizedBox(
-                        height: 50,
+                        height: 25,
                       ),
                       TextField(
                         controller:myController,
@@ -510,6 +527,7 @@ class RegistePayee extends State {
                           border: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.red),
                           ),
+                          errorText: _PRvalidate ? 'Value Can\'t Be Empty' : null,
                         ),
                       ),
                       SizedBox(

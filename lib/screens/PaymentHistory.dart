@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pan_asia_bank_app/widgets/NavDrawer.dart';
@@ -6,14 +8,171 @@ import 'package:http/http.dart' as http;
 
 import 'package:fancy_dialog/fancy_dialog.dart';
 
-class PaymentHistory extends StatelessWidget {
+class PaymentHistory extends StatefulWidget{
+  @override
+  _PaymentHistory createState() => _PaymentHistory();
+
+}
+class _PaymentHistory extends State<PaymentHistory> {
   static BuildContext buildContext;
 
+  @override
+  void initState() {
+    _fetchUser();
+  }
 
+
+
+  List users = List();
+  var isLoading = true;
+
+  void _fetchUser() async{
+    final response =  await http.get("https://uee-pan-backend.herokuapp.com/user/");
+    if (response.statusCode == 200) {
+      users = json.decode(response.body) as List;
+      setState(() {
+        isLoading = false;
+      });
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+  List<Widget> listArray = [];
+
+  _returnHistory(){
+    if(users.length != 0 && users.length != null) {
+      print("users:" + users.length.toString());
+      for (var x = 0; x <= users.length; x++) {
+        if (users[x]['_id'] == "5f7094ced1c8261f4f9b756f") {
+          for (var y = 0; y < users[x]['BillPaymentHistory'].length; y++) {
+            if( users[x]['BillPaymentHistory'][y] == null) {
+              y++;
+            }
+            else{
+              if(users[x]["BillPaymentHistory"][y]["ServiceProName"] != null) {
+                print("history : " + y.toString() + " -->" +
+                    users[x]['BillPaymentHistory'][y].toString());
+                listArray.add( new Container(
+                    height: 120,
+                    width: 400,
+                    margin: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: InkWell(
+                        onTap: () {
+                          showDialog2(context,users[x]["BillPaymentHistory"][y]["refNo"],users[x]["BillPaymentHistory"][y]["ServiceProName"],users[x]["BillPaymentHistory"][y]["Amount"]);
+                        },
+                        child: Card(
+                          child: Column(children: <Widget>[
+                            new Container(
+                                decoration: new BoxDecoration(
+                                    color:
+                                    Color.fromRGBO(38, 227, 0, 200)),
+                                child:Column(children: [
+                                  ListTile(
+
+                                    title: Text(users[x]["BillPaymentHistory"][y]["refNo"],
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                    subtitle: Text(users[x]["BillPaymentHistory"][y]["ServiceProName"]),
+
+                                    trailing: Icon(
+                                      Icons.keyboard_arrow_right,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                ],)
+                            ),
+                            Align(
+                                alignment: Alignment(0.9, 10),
+                                child: Text("LKR     "+users[x]["BillPaymentHistory"][y]["Amount"],
+                                    style: TextStyle(
+
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15))),
+                            Align(
+                                alignment: Alignment(0.9, 10),
+                                child: Text("2020-AUG-18",
+                                    style: TextStyle(
+                                        color: Colors.grey, fontSize: 12)))
+                          ]),
+                        ),
+                      ),
+                    )));
+              }
+              else{
+                listArray.add(
+
+                    new Container(
+                          height: 120,
+                          width: 400,
+                          margin: const EdgeInsets.all(8.0),
+                          child: Center(
+                            child: InkWell(
+                              onTap: () {
+                                showDialog2(context,users[x]["BillPaymentHistory"][y]["refNo"],users[x]["BillPaymentHistory"][y]["merchant"],users[x]["BillPaymentHistory"][y]["Amount"]);
+                              },
+                              child: Card(
+                                child: Column(children: <Widget>[
+                                  new Container(
+                                      decoration: new BoxDecoration(
+                                          color:
+                                          Color.fromRGBO(38, 227, 0, 200)),
+                                      child:Column(children: [
+                                        ListTile(
+
+                                          title: Text(users[x]["BillPaymentHistory"][y]["refNo"],
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                          subtitle: Text(users[x]["BillPaymentHistory"][y]["merchant"]),
+
+                                          trailing: Icon(
+                                            Icons.keyboard_arrow_right,
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                      ],)
+                                      ),
+                                  Align(
+                                      alignment: Alignment(0.9, 10),
+                                      child: Text("LKR     "+users[x]["BillPaymentHistory"][y]["Amount"],
+                                          style: TextStyle(
+
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15))),
+                                  Align(
+                                      alignment: Alignment(0.9, 10),
+                                      child: Text("2020-AUG-18",
+                                          style: TextStyle(
+                                              color: Colors.grey, fontSize: 12)))
+                                ]),
+                              ),
+                            ),
+                          )));
+//                    new ListTile(
+//                  title: Text(users[x]["BillPaymentHistory"][y]["refNo"]),
+//                  subtitle: Text(
+//                      users[x]["BillPaymentHistory"][y]["merchant"]),
+//                  trailing: Icon(
+//                    Icons.keyboard_arrow_right,
+//                    color: Colors.green,
+//                  ),
+//                ));
+              }
+            }
+          }
+          break;
+        }
+      }
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
+    _returnHistory();
 
     return Scaffold(
         drawer: NavDrawer(),
@@ -47,168 +206,32 @@ class PaymentHistory extends StatelessWidget {
                               border: InputBorder.none,
                               hintText: '18-08-2020'),
                         ),),
-                      Container(
-                          height: 110,
-                          width: 400,
-                          margin: const EdgeInsets.all(8.0),
-                          child: Center(
-                            child: InkWell(
-                              onTap: () {
-                                showDialog2(context);
-                              },
-                              child: Card(
-                                child: Column(children: <Widget>[
-                                  new Container(
-                                      decoration: new BoxDecoration(
-                                          color:
-                                          Color.fromRGBO(38, 227, 0, 200)),
-                                      child:Column(children: [
-                                        ListTile(
-
-                                          title: Text("0771234562",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                          subtitle: Text("DIALOG MOBILE \nAPPROVED"),
-
-                                          trailing: Icon(
-                                            Icons.keyboard_arrow_right,
-                                            color: Colors.red,
-                                          ),
-                                        ),
-                                      ],)
-                                      ),
-                                  Align(
-                                      alignment: Alignment(0.9, 10),
-                                      child: Text("LKR     100.00",
-                                          style: TextStyle(
-
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 15))),
-                                  Align(
-                                      alignment: Alignment(0.9, 10),
-                                      child: Text("2020-AUG-18",
-                                          style: TextStyle(
-                                              color: Colors.grey, fontSize: 12)))
-                                ]),
-                              ),
-                            ),
-                          )),
-                      Container(
-                          height: 110,
-                          width: 400,
-                          margin: const EdgeInsets.all(8.0),
-                          child: Center(
-                            child: InkWell(
-                              onTap: () {
-                                showDialog2(context);
-                              },
-                              child: Card(
-                                child: Column(children: <Widget>[
-                                  new Container(
-                                      decoration: new BoxDecoration(
-                                          color:
-                                          Color.fromRGBO(38, 227, 0, 200)),
-                                      child:Column(children: [
-                                        ListTile(
-
-                                          title: Text("11829338291193",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                          subtitle: Text("CEB Bill \nAPPROVED"),
-
-                                          trailing: Icon(
-                                            Icons.keyboard_arrow_right,
-                                            color: Colors.red,
-                                          ),
-                                        ),
-                                      ],)
+                                  Card(
+                                    child: Column(
+                                        children: isLoading? [CircularProgressIndicator()]:listArray
+                                    ),
                                   ),
-                                  Align(
-                                      alignment: Alignment(0.9, 10),
-                                      child: Text("LKR     3000.00",
-                                          style: TextStyle(
 
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 15))),
-                                  Align(
-                                      alignment: Alignment(0.9, 10),
-                                      child: Text("2020-AUG-18",
-                                          style: TextStyle(
-                                              color: Colors.grey, fontSize: 12)))
                                 ]),
                               ),
                             ),
-                          )),
-
-                      Container(
-                        margin: EdgeInsets.only(left: 20, right: 50),
-                        child:
-                        TextField(
-                          decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: '16-08-2020'),
-                        ),),
-                      Container(
-                          height: 110,
-                          width: 400,
-                          margin: const EdgeInsets.all(8.0),
-                          child: Center(
-                            child: InkWell(
-                              onTap: () {
-                                showDialog2(context);
-                              },
-                              child: Card(
-                                child: Column(children: <Widget>[
-                                  new Container(
-                                      decoration: new BoxDecoration(
-                                          color:
-                                          Color.fromRGBO(255, 23, 0, 140)),
-                                      child:Column(children: [
-                                        ListTile(
-
-                                          title: Text("0771234562",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                          subtitle: Text("DIALOG MOBILE \nREJECTED"),
-
-                                          trailing: Icon(
-                                            Icons.keyboard_arrow_right,
-                                            color: Colors.red,
-                                          ),
-                                        ),
-                                      ],)
-                                  ),
-                                  Align(
-                                      alignment: Alignment(0.9, 10),
-                                      child: Text("LKR     100.00",
-                                          style: TextStyle(
-
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 15))),
-                                  Align(
-                                      alignment: Alignment(0.9, 10),
-                                      child: Text("2020-AUG-18",
-                                          style: TextStyle(
-                                              color: Colors.grey, fontSize: 12)))
-                                ]),
-                              ),
-                            ),
-                          )),
+                          );
 
 
 
-                    ])))
-    );
+
+//                    ])))
+//    );
   }
 
-  Future showDialog2(context) {
+  Future showDialog2(context,refNo,sProv,amount) {
     return showDialog(
       context: context,
       child: Dialog(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20.0)), //this right here
         child: Container(
-          height: 480,
+          height: 420,
           child: Padding(
             padding: const EdgeInsets.all(0),
             child: Column(
@@ -236,11 +259,11 @@ class PaymentHistory extends StatelessWidget {
                       decoration: InputDecoration(
                           border: InputBorder.none,
                           hintStyle: TextStyle(fontSize: 16),
-                          hintText: 'Account Number'),
+                          hintText: 'Service Provider'),
                     )),
                 Container(
                   margin: EdgeInsets.only(left: 25, right: 50),
-                  child: Text("87376694",
+                  child: Text(sProv,
                       style:
                       TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
                 ),
@@ -250,12 +273,12 @@ class PaymentHistory extends StatelessWidget {
                   child: TextField(
                     decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: 'Transaction Reference Number'),
+                        hintText: 'Reference Number'),
                   ),
                 ),
                 Container(
                     margin: EdgeInsets.only(left: 25, right: 50),
-                    child: Text("RB1001200301032",
+                    child: Text(refNo,
                         style: TextStyle(
                             fontSize: 17, fontWeight: FontWeight.bold))),
                 Container(
@@ -267,20 +290,7 @@ class PaymentHistory extends StatelessWidget {
                 ),
                 Container(
                     margin: EdgeInsets.only(left: 25, right: 50),
-                    child: Text("LKR.3000",
-                        style: TextStyle(
-                            fontSize: 17, fontWeight: FontWeight.bold))),
-                Container(
-                  margin: EdgeInsets.only(left: 20, right: 50),
-                  child: TextField(
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Fund Transfer Remark'),
-                  ),
-                ),
-                Container(
-                    margin: EdgeInsets.only(left: 25, right: 50),
-                    child: Text("August Monthly Allowance",
+                    child: Text("LKR. "+amount,
                         style: TextStyle(
                             fontSize: 17, fontWeight: FontWeight.bold))),
                 Container(
@@ -316,6 +326,7 @@ class PaymentHistory extends StatelessWidget {
                         )
                       ],
                     )),
+
               ],
             ),
           ),
