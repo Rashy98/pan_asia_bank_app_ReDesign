@@ -51,7 +51,7 @@ class Login extends StatelessWidget{
     return Scaffold(
         backgroundColor: Colors.red,
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(150.0),
+          preferredSize: Size.fromHeight(80.0),
           child: AppBar(
             // Here we take the value from the MyHomePage object that was created by
             // the App.build method, and use it to set our appbar title.
@@ -72,68 +72,75 @@ class Login extends StatelessWidget{
             centerTitle: true,
           ),
         ),
-      body: Column(
-        children: [
-          Container(
-              margin: const EdgeInsets.only(top: 10),
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+      body: Container(
+          child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+                margin: const EdgeInsets.only(top: 0),
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
 
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(left: 25, top: 50, right: 25),
-                        child:_inputField('UserName', Colors.white),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(left: 25, top: 10, right: 25),
-                        child: _inputField('Password', Colors.white),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only( top: 15),
-                        child: Text('Forgot Password?', style: TextStyle(color: Colors.white),),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only( top: 25),
-                        child: _buttons('Login', context),
-                      ),
-                    ],
-                  )
-              )
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 80),
-            child: Table(
-              border: TableBorder(top: BorderSide(color: Colors.white, width: 4),
-                                  verticalInside: BorderSide(color: Colors.white, width: 4),
-                                  horizontalInside: BorderSide(color: Colors.white, width: 4)
-              ),
-              children: [
-                TableRow(
-                  children: [
-                    Icon(Icons.account_circle),
-                    Icon(Icons.access_alarm)
-                  ]
-                ),
-                TableRow(
-                  children: [
-//                    Container(
-//                      margin: EdgeInsets.all(10),
-//                      child: Text('Hello'),
-//                    ),
-                    Icon(Icons.account_circle),
-                    Icon(Icons.access_alarm)
-                  ]
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(left: 25, top: 30, right: 25),
+                          child:_inputField('UserName', Colors.white),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(left: 25, top: 10, right: 25),
+                          child: _inputField('Password', Colors.white),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only( top: 15),
+                          child: Text('Forgot Password?', style: TextStyle(color: Colors.white),),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only( top: 5),
+                          child: _buttons('Login', context),
+                        ),
+                      ],
+                    )
                 )
-              ],
             ),
-          )
-        ],
+            Container(
+//            margin: const EdgeInsets.only(top: 80),
+//            child: Table(
+//              border: TableBorder(top: BorderSide(color: Colors.white, width: 4),
+//                                  verticalInside: BorderSide(color: Colors.white, width: 4),
+//                                  horizontalInside: BorderSide(color: Colors.white, width: 4)
+//              ),
+//              children: [
+//                TableRow(
+//                  children: [
+//                    Icon(Icons.account_circle),
+//                    Icon(Icons.access_alarm)
+//                  ]
+//                ),
+//                TableRow(
+//                  children: [
+////                    Container(
+////                      margin: EdgeInsets.all(10),
+////                      child: Text('Hello'),
+////                    ),
+//                    Icon(Icons.account_circle),
+//                    Icon(Icons.access_alarm)
+//                  ]
+//                )
+//              ],
+                child: Image.asset("assets/HomeFunc.png",
+                    width: 350,
+                    height: 340,
+                    fit:BoxFit.fill   ),
+//            ),
+            )
+          ],
+        ),
       )
 
-
+      )
     );
   }
 

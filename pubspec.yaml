@@ -61,6 +61,7 @@ flutter:
   assets:
      - assets/logo.png
      - assets/unnamed.png
+     - assets/HomeFunc.png
 
   #   - images/a_dot_ham.jpeg
 
