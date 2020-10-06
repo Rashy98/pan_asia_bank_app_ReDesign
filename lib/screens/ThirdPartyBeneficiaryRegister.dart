@@ -150,10 +150,10 @@ class ThirdPartBeneficiaryRegister extends State {
   void _ResetButton(){
     setState(() {
 
-      payeeNameController.text = " ";
-      accountNumberController.text = " ";
-      bankNameController.text = " ";
-      payeeEmailController.text = " ";
+      payeeNameController.text = "";
+      accountNumberController.text = "";
+      bankNameController.text = "";
+      payeeEmailController.text = "";
 
     });
   }
@@ -402,7 +402,7 @@ class ThirdPartBeneficiaryRegister extends State {
                       TextField(
                         controller:payeeNameController,
                         decoration: InputDecoration(
-                          hintText: beneName,
+                          hintText: "Beneficiary Name",
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.grey),
                           ),
@@ -418,7 +418,7 @@ class ThirdPartBeneficiaryRegister extends State {
                       TextField(
                         controller:accountNumberController,
                         decoration: InputDecoration(
-                          hintText: beneAccNo,
+                          hintText: "Beneficiary Account/Card Number",
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.grey),
                           ),
@@ -434,7 +434,7 @@ class ThirdPartBeneficiaryRegister extends State {
                       TextField(
                         controller:bankNameController,
                         decoration: InputDecoration(
-                          hintText: bankName,
+                          hintText: "Bank Name",
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.grey),
                           ),
@@ -450,7 +450,7 @@ class ThirdPartBeneficiaryRegister extends State {
                       TextField(
                         controller:payeeEmailController,
                         decoration: InputDecoration(
-                          hintText: beneEmail,
+                          hintText: "Beneficiary Email",
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.grey),
                           ),
