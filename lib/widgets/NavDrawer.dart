@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pan_asia_bank_app/screens/ATMLocator.dart';
 import 'package:pan_asia_bank_app/screens/AccountHistory.dart';
 import 'package:pan_asia_bank_app/screens/AdHocBillPayment.dart';
+import 'package:pan_asia_bank_app/screens/CheckBookRequest.dart';
 import 'package:pan_asia_bank_app/screens/ContactUs.dart';
 import 'package:pan_asia_bank_app/screens/CreditCardPayments.dart';
 //import 'package:pan_asia_bank_app/screens/AdHocBillPaymentForm.dart';
@@ -62,12 +64,12 @@ class _NavDrawerD extends State {
             onTap: () {
               Navigator.pop(context);
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => RegisterPay()));
+                  context, MaterialPageRoute(builder: (context) => AccountSummary()));
             },
           ),
 
           ExpansionTile(
-            leading: Icon(Icons.input),
+            leading: Icon(Icons.account_circle),
             trailing: Icon(Icons.keyboard_arrow_right),
             title: Text('My Account' , style: const TextStyle(
 
@@ -91,7 +93,7 @@ class _NavDrawerD extends State {
               ),
 
               new ListTile(
-                title: const Text('Account Summary',
+                title: const Text('Balance Enquiry',
                   style: const TextStyle(
 
                       color: Color(0xFFFFFFFF)
@@ -263,71 +265,137 @@ class _NavDrawerD extends State {
 
           ),
 
-          ListTile(
-            leading: Icon(Icons.input),
-            title: Text('Card Payment' , style: const TextStyle(
+          ExpansionTile(
+            leading: Icon(Icons.calendar_today),
+            trailing: Icon(Icons.keyboard_arrow_right),
+            title: Text('Standing Orders' , style: const TextStyle(
+
                 color: Color(0xFFFFFFFF)
             ),
-            ),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => CardPayment()));
-            },
 
+            ),
+            children: <Widget>[
+              ListTile(
+                title: Text('Standing Order Requests',style: const TextStyle(
+                    color: Color(0xFFFFFFFF)
+                ),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => OrderRequest()));
+                },
+              ),
+            ],
           ),
 
-          ListTile(
-            leading: Icon(Icons.verified_user),
-            title: Text('Standing Orders',style: const TextStyle(
-                color: Color(0xFFFFFFFF)
-            ),
-            ),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => OrderRequest()));
-            },
-          ),
 
-          ListTile(
+
+          ExpansionTile(
             leading: Icon(Icons.payment),
-            title: Text('Card Services',style: const TextStyle(
+            trailing: Icon(Icons.keyboard_arrow_right),
+            title: Text('Card Services' , style: const TextStyle(
+
                 color: Color(0xFFFFFFFF)
-            ),),
-            onTap: () => {
-              Navigator.of(context).pop(),
-              Navigator.push(
-              context, MaterialPageRoute(builder: (context) => MyProfile()))
-            },
+            ),
+
+            ),
+            children: <Widget>[
+              ListTile(
+                title: Text('Card Payment' , style: const TextStyle(
+                    color: Color(0xFFFFFFFF)
+                ),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => CardPayment()));
+                },
+
+              ),
+    ],
           ),
-          ListTile(
-            leading: Icon(Icons.account_circle),
-            title: Text('Account',style: const TextStyle(
+          ExpansionTile(
+            leading: Icon(Icons.library_books),
+            trailing: Icon(Icons.keyboard_arrow_right),
+            title: Text('Requests' , style: const TextStyle(
+
                 color: Color(0xFFFFFFFF)
-            ),),
-            onTap: () => {
-              Navigator.of(context).pop(),
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => ManageAccount()))
-            },
+            ),
+
+            ),
+            children: <Widget>[
+              ListTile(
+                title: Text('Cheque Book Request' , style: const TextStyle(
+                    color: Color(0xFFFFFFFF)
+                ),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => ChequeBookReq()));
+                },
+
+              ),
+
+              ListTile(
+                title: Text('Cheque Book History' , style: const TextStyle(
+                    color: Color(0xFFFFFFFF)
+                ),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+//                  Navigator.push(
+//                      context, MaterialPageRoute(builder: (context) => CardPayment()));
+                },
+
+              ),
+            ],
           ),
-          ListTile(
+          ExpansionTile(
+            leading: Icon(Icons.map),
+            trailing: Icon(Icons.keyboard_arrow_right),
+            title: Text('Other Services' , style: const TextStyle(
+
+                color: Color(0xFFFFFFFF)
+            ),
+
+            ),
+            children: <Widget>[
+              ListTile(
+                title: Text('View Interest rate' , style: const TextStyle(
+                    color: Color(0xFFFFFFFF)
+                ),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+
+                },
+
+              ),
+
+              ListTile(
+                title: Text('View Forex Rate' , style: const TextStyle(
+                    color: Color(0xFFFFFFFF)
+                ),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+//                  Navigator.push(
+//                      context, MaterialPageRoute(builder: (context) => CardPayment()));
+                },
+
+              ),
+            ],
+          ),
+       ListTile(
             leading: Icon(Icons.settings),
             title: Text('Preferences',style: const TextStyle(
                 color: Color(0xFFFFFFFF)
             ),),
-            onTap: () => {Navigator.of(context).pop()},
-          ),
-          ListTile(
-            leading: Icon(Icons.input),
-            title: Text('Registered Bill Payments',style: const TextStyle(
-            color: Color(0xFFFFFFFF)
-            ),),
-            onTap: () => {Navigator.of(context).pop(),
+            onTap: () => { Navigator.of(context).pop(),
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => RegisteredBill())
-              )},
+                  context, MaterialPageRoute(builder: (context) => ManageAccount()))},
           ),
           ListTile(
             leading: Icon(Icons.location_on),
@@ -337,7 +405,7 @@ class _NavDrawerD extends State {
             onTap: () => {
               Navigator.of(context).pop(),
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => AdHocBill())
+                  context, MaterialPageRoute(builder: (context) => ATMLocator())
               )},
 
           ),

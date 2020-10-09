@@ -223,10 +223,20 @@ class StandingOrderRequest extends State {
                           ),
                       Container(height: 20),
 
-                      Align(
+
+              Container(
+                  margin: EdgeInsets.only(left: 5,),
                         child: Row(
                             children: <Widget>[
-                              RaisedButton(
+                            ButtonTheme(
+                            minWidth: 360,
+                              height: 50,
+                              child:RaisedButton(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+//                                    side: BorderSide(color: Colors.teal),
+                                  ),
+                                  color: CupertinoColors.extraLightBackgroundGray,
                                   child: Text(_StartDate == null ?"     Start Date   " : convertDateTimeDisplay(_StartDate.toString())),
                                   onPressed: (){
                                     showDatePicker(context: context,
@@ -246,7 +256,11 @@ class StandingOrderRequest extends State {
                                     });
                                   }
                               ),
-                              Container(width: 20,),
+                            ),
+                              ],
+                        ),
+              ),
+                              Container(width: 20),
                               Align(
 
                                   child : Row(
@@ -266,40 +280,47 @@ class StandingOrderRequest extends State {
                                     ],
                                   )
                               ),
-                            ]
-                        )
-                      ),
 
-                      Container(height: 20),
-
-                      Align(
-                          child: Row(
-                              children: <Widget>[
-                                RaisedButton(
-                                    child: Text(
-                                        _EndDate == null ?"     End Date     " : convertDateTimeDisplay(_EndDate.toString())),
-                                    onPressed: (){
-                                        showDatePicker(context: context,
-                                        initialDate: (_EndDate == null ?  DateTime.now() : _EndDate),
-                                        firstDate: DateTime(2001),
-                                        lastDate: DateTime(2222),
-                                        builder: (context, child) {
-                                          return Theme(
-                                            data: ThemeData.dark(), // This will change to light theme.
-                                            child: child,
-                                          );
-                                        },
-                                      ).then((date) {
-                                        setState(() {
-                                          _EndDate = date;
-                                        });
+                      _isCheckedValue ?
+                      Container():
+                      Container(
+                        margin: EdgeInsets.only(left: 5,),
+                        child: Row(
+                          children: <Widget>[
+                            ButtonTheme(
+                              minWidth: 360,
+                              height: 50,
+                              child:RaisedButton(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+//                                    side: BorderSide(color: Colors.teal),
+                                  ),
+                                  color: CupertinoColors.extraLightBackgroundGray,
+                                  child: Text( _EndDate == null ?"     End Date     " : convertDateTimeDisplay(_EndDate.toString())),
+                                  onPressed: (){
+                                    showDatePicker(context: context,
+                                      initialDate: (_StartDate == null ?  DateTime.now() : _StartDate),
+                                      firstDate: DateTime(2001),
+                                      lastDate: DateTime(2222),
+                                      builder: (context, child) {
+                                        return Theme(
+                                          data: ThemeData.dark(), // This will change to light theme.
+                                          child: child,
+                                        );
+                                      },
+                                    ).then((date) {
+                                      setState(() {
+                                        _StartDate = date;
                                       });
-                                    }
-                                ),
-
-                              ]
-                          )
+                                    });
+                                  }
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
+
+
                       Container(height: 20),
 
                       Align(
