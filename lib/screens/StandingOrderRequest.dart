@@ -299,7 +299,7 @@ class StandingOrderRequest extends State {
                                   child: Text( _EndDate == null ?"     End Date     " : convertDateTimeDisplay(_EndDate.toString())),
                                   onPressed: (){
                                     showDatePicker(context: context,
-                                      initialDate: (_StartDate == null ?  DateTime.now() : _StartDate),
+                                      initialDate: (_EndDate == null ?  DateTime.now() : _EndDate),
                                       firstDate: DateTime(2001),
                                       lastDate: DateTime(2222),
                                       builder: (context, child) {
@@ -310,7 +310,7 @@ class StandingOrderRequest extends State {
                                       },
                                     ).then((date) {
                                       setState(() {
-                                        _StartDate = date;
+                                        _EndDate = date;
                                       });
                                     });
                                   }

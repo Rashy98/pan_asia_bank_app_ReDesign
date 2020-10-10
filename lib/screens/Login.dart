@@ -77,7 +77,7 @@ class Login extends StatelessWidget{
         child: Column(
           children: [
             Container(
-                margin: const EdgeInsets.only(top: 0),
+                margin: const EdgeInsets.only(top: 20),
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: SingleChildScrollView(
                     child: Column(
@@ -106,7 +106,7 @@ class Login extends StatelessWidget{
                 )
             ),
             Container(
-//            margin: const EdgeInsets.only(top: 80),
+            margin: const EdgeInsets.only(top: 80),
 //            child: Table(
 //              border: TableBorder(top: BorderSide(color: Colors.white, width: 4),
 //                                  verticalInside: BorderSide(color: Colors.white, width: 4),
